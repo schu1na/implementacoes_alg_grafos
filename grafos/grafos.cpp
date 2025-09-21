@@ -36,7 +36,7 @@ Vizinho * Grafo::buscar_aresta(int v1, int v2){ //Estamos buscando pela aresta v
     if(pv1 != nullptr && pv2 != nullptr){
         resp = pv1->prox_vizinho;
         while(resp != nullptr && resp->id_vizinho != v2){  //O(deg(v1)) grau do vértice v1
-            resp = resp->prox;                          //que no pior dos casos é O(V)
+            resp = resp->prox;                             //que no pior dos casos é O(V)
         }
     }
     return resp;
@@ -55,4 +55,5 @@ void Grafo::imprimir_grafo(){
         std::cout << std::endl;
         g = g->prox_vertice;
     }
+    std::cout << std::endl;
 }

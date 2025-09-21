@@ -1,7 +1,7 @@
 #include <iostream>
 #include "grafos/grafos.hpp"
 #include "uteis/insercoes/insercoes.hpp"
-// #include "uteis/remocoes/remocoes.hpp"
+#include "uteis/remocoes/remocoes.hpp"
 
 int main(){
     Grafo * G = new Grafo();
@@ -15,11 +15,15 @@ int main(){
     inserir_aresta_nao_direcionado(G, 1, 9);
     inserir_aresta_nao_direcionado(G, 1, 1);
 
-    inserir_aresta_direcionado(G, 4, 23);
-    inserir_aresta_direcionado(G, 4, 1);
-    inserir_aresta_direcionado(G, 1, 9);
-    inserir_aresta_direcionado(G, 1, 1);
+    // inserir_aresta_direcionado(G, 4, 23);
+    // inserir_aresta_direcionado(G, 4, 1);
+    // inserir_aresta_direcionado(G, 1, 9);
+    // inserir_aresta_direcionado(G, 1, 1);
 
     G->imprimir_grafo();
+    // remover_aresta_nao_direcionado(G, 1, 1);
+    remover_vertice(G, 1);
+    G->imprimir_grafo();
+
     return 0;
 }

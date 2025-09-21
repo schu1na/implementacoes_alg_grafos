@@ -31,12 +31,12 @@ Vizinho * inserir_aresta_direcionado(Grafo * g, int v1, int v2){
     return NULL; // Retorna NULL quando pelo menos 1 dos vértices não existir no grafo
 }
 
-// FunçÕa de inserção de arestas em um grafo não direcionado
+// Função de inserção de arestas em um grafo não direcionado
 void inserir_aresta_nao_direcionado(Grafo * g, int v1, int v2){
     if(v1 == v2){
-        Vizinho * e1 = inserir_aresta_direcionado(g, v1, v2);   //O(V)
+        inserir_aresta_direcionado(g, v1, v2);   //O(V)
         return;
     }
-    Vizinho * e1 = inserir_aresta_direcionado(g, v1, v2);   //O(V)
-    Vizinho * e2 = inserir_aresta_direcionado(g, v2, v1);   //O(V)
+    inserir_aresta_direcionado(g, v1, v2);   //O(V)
+    inserir_aresta_direcionado(g, v2, v1);   //O(V)
 }
