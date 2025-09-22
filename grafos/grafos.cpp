@@ -1,59 +1,53 @@
 #include <iostream>
 #include "grafos.hpp"
 
-// Construtor de Vizinho
-Vizinho::Vizinho(int id_vizinho) : id_vizinho(id_vizinho){
-        prox = nullptr;
-}
+// Construtor de Vertice
+Vertice::Vertice(int id) : id(id){}
 
-// Construtor de Grafo inicializando com um vértice
-Grafo::Grafo(int id_vertice) : id_vertice(id_vertice) {
-    prox_vizinho = nullptr;
-    prox_vertice = nullptr;
-}
+// Construtor de Aresta
+Aresta::Aresta(Vertice * v1, Vertice * v2) : v1(v1), v2(v2){}
 
-// Construtor de Grafo sem vértice inicial
-Grafo::Grafo(){
-    id_vertice = INFINITO;
-    prox_vizinho = nullptr;
-    prox_vertice = nullptr;
-}
+// Construtor de Grafo 
+Grafo::Grafo(){}
 
 // Método de busca de um vértice
-Grafo * Grafo::buscar_vertice(int x){
-    Grafo * g = this;
-    while(g != nullptr && g->id_vertice != x){ //O(V) porque podemos ter que olhar todos os vértices
-        g = g->prox_vertice;
+Vertice * Grafo::buscar_vertice(int x){
+    auto loc = V.find(x); //O(1)
+    if(loc != V.end()){   // Verifica se encontrou o vértice
+        return loc->second;
     }
-    return g;
+    return nullptr;
+}
+
+std::size_t PairHash::operator()(const std::pair<int,int>& p) const{
+    return std::hash<int>()(p.first) ^ (std::hash<int>()(p.second) << 1);
 }
 
 // Método de busca de uma aresta
-Vizinho * Grafo::buscar_aresta(int v1, int v2){ //Estamos buscando pela aresta v1 -> v2
-    Grafo * pv1 = buscar_vertice(v1);   //O(V)
-    Grafo * pv2 = buscar_vertice(v2);   //O(V)
-    Vizinho * resp = nullptr;
-    if(pv1 != nullptr && pv2 != nullptr){
-        resp = pv1->prox_vizinho;
-        while(resp != nullptr && resp->id_vizinho != v2){  //O(deg(v1)) grau do vértice v1
-            resp = resp->prox;                             //que no pior dos casos é O(V)
+Aresta * Grafo::buscar_aresta(int v1, int v2){ //Estamos buscando pela aresta v1 -> v2
+    Vertice * pv1 = buscar_vertice(v1);   //O(1)
+    Vertice * pv2 = buscar_vertice(v2);   //O(1)
+
+    Aresta * resp = nullptr;
+    // apenas procuramos a aresta se ambos os vértices existirem
+    if(pv1 != nullptr && pv2 != nullptr){  
+        auto loc = E.find({v1,v2}); // utilizamos o hash da chave dupla para encontrar a aresta
+        if(loc != E.end()){
+            resp = loc->second;
+            return resp;
         }
     }
     return resp;
 }
 
-// Método para imprimir o grafo (INCOMPLETO: falta imprimir arestas)
+// Método para imprimir o grafo 
 void Grafo::imprimir_grafo(){
-    Grafo * g = this;
-    while(g != nullptr){   //O(V) porque imprimimos todos os vértices
-        std::cout << g->id_vertice;
-        Vizinho * v = g->prox_vizinho;
-        while(v != nullptr){   //O(deg(v))
-            std::cout << " -> " << v->id_vizinho;
-            v = v->prox;
+    for(auto v : V){
+        std::cout << v.second->id; 
+        for(auto u : v.second->Adj){
+            std::cout << "->" << u.second->id;
         }
         std::cout << std::endl;
-        g = g->prox_vertice;
     }
     std::cout << std::endl;
 }
