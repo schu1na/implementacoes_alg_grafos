@@ -5,7 +5,8 @@ INCLUDES = -I. -Igrafos -Iuteis/insercoes -Iuteis/remocoes -Iuteis/buscas
 SRC = main.cpp \
       grafos/grafos.cpp \
       uteis/insercoes/insercoes.cpp \
-      uteis/remocoes/remocoes.cpp
+      uteis/remocoes/remocoes.cpp \
+	  uteis/buscas/buscas.cpp
       # adicione mais .cpp se tiver (ex: buscas.cpp)
 
 OBJ = $(SRC:.cpp=.o)
