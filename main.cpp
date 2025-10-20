@@ -30,14 +30,6 @@ int main(){
     G->inserir_aresta_nao_direcionado(10, 11);
 
     G->imprimir_grafo();
-
-    std::unordered_set<int> raizes = G->bfs();
-
-    // std::unordered_set<int> raiz = {1};
-    Grafo * Gp = G->grafo_predecessor(raizes);
-    Gp->imprimir_grafo();
-
-    G->print_path(6, 5);
     
     return 0;
 }

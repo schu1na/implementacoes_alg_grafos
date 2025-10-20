@@ -141,48 +141,61 @@ void Grafo::print_path(int s, int v){
     }
 };
 
-// Método que realiza busca em profundidade (Depth-First Search) no grafo a partir do vértice s
-// void Grafo::dfs(Vertice * s){
-
-// }
 
 // Função auxiliar que realiza os passeios ao longo do grafo. Método utilizada
 // no método dfs()
-// void Grafo::dfs_visit(Vertice * u){
-//     time++;
-//     // Definimos o tempo de chegada e marcamos u de CINZA
-//     u->d = time;
-//     u->cor = CINZA;
-//     // VIsitamos cada vértice BRANCO nas adjacencias de u
-//     for(auto v : u->Adj){
-//         if(v.second->cor == BRANCO){
-//             v.second->pi = u;
-//             // Fazemos uso da recursão para empilhar os vértices
-//             dfs_visit(v.second);
-//         }
-//     }
-//     time++;
-//     // Definimos o tempo de saída após olhar todos os vértices
-//     // da adjacencia de u e pintamos u de PRETO
-//     u->f = time;
-//     u->cor = PRETO;
-// }
+void Grafo::dfs_visit(Vertice * u){
+    time++;
+    // Definimos o tempo de chegada e marcamos u de CINZA
+    u->d = time;
+    u->cor = CINZA;
+    // VIsitamos cada vértice BRANCO nas adjacencias de u
+    for(auto v : u->Adj){
+        if(v.second->cor == BRANCO){
+            v.second->pi = u;
+            // Fazemos uso da recursão para empilhar os vértices
+            dfs_visit(v.second);
+        }
+    }
+    time++;
+    // Definimos o tempo de saída após olhar todos os vértices
+    // da adjacencia de u e pintamos u de PRETO
+    u->f = time;
+    u->cor = PRETO;
+}
 
-// Método que realiza busca em profundidade (Depth-First Search) no grafo inteiro
-// void Grafo::dfs(){
-//     // Inicializamos o grafo com os pais nulos e cores brancas
-//     for(auto v : V){
-//         v.second->cor = BRANCO;
-//         v.second->pi = nullptr;
-//     }
-//     // Zeramos o tempo
-//     time = 0;
-//     // Aplicamos o DFS para todo vértice u pertencente a V
-//     // que seja branco.
-//     for(auto u : V){
-//         if(u.second->cor == BRANCO){
-//             dfs_visit(u.second);
-//         }
-//     }
-// };
+// Método que realiza busca em profundidade (Depth-First Search) no grafo a partir do vértice s
+void Grafo::dfs(Vertice * s){
+    // Inicializamos o grafo com os pais nulos e cores brancas
+    for(auto v : V){
+        v.second->cor = BRANCO;
+        v.second->pi = nullptr;
+    }
+    // Zeramos o tempo
+    time = 0;
+    dfs_visit(s);
+}
+
+// Método que realiza busca em profundidade (Depth-First Search) no grafo inteiro e
+// retorna as raizes que foram aplicadas a dfs.
+std::unordered_set<int> Grafo::dfs(){
+    // Inicializamos o grafo com os pais nulos e cores brancas
+    for(auto v : V){
+        v.second->cor = BRANCO;
+        v.second->pi = nullptr;
+    }
+    // Zeramos o tempo
+    time = 0;
+    // Conjunto das raizes
+    std::unordered_set<int> raizes;
+    // Aplicamos o DFS para todo vértice u pertencente a V
+    // que seja branco.
+    for(auto u : V){
+        if(u.second->cor == BRANCO){
+            raizes.emplace(u.second->id);
+            dfs_visit(u.second);
+        }
+    }
+    return raizes;
+};
 

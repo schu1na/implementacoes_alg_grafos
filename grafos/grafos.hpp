@@ -95,7 +95,7 @@ typedef struct Grafo {
     void dfs(Vertice * s);
 
     // Método que realiza busca em profundidade (Depth-First Search) no grafo inteiro
-    void dfs();
+    std::unordered_set<int> dfs();
 
     // Função auxiliar que realiza os passeios ao longo do grafo. Método utilizada no método dfs()
     void dfs_visit(Vertice * u);
